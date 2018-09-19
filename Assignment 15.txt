@@ -1,0 +1,65 @@
+a. Create classification model using logistic regression model
+Ans: a. Create classification model using logistic regression model
+ bc <- bc[,-1]
+ for(i in 1:9) {
+  bc[, i] <- as.numeric(as.character(bc[, i]))
+}
+bc$Class <- ifelse(bc$Class == "malignant", 1, 0)
+bc$Class <- factor(bc$Class, levels = c(0, 1))
+
+b. verify model goodness of fit
+ Ans: num_of_samples = 1000
+x <- rgamma(num_of_samples, shape = 10, scale = 3)
+x <- x + rnorm(length(x), mean=0, sd = .1)
+p1 <- hist(x,breaks=50, include.lowest=FALSE, right=FALSE)
+
+c. Report the accuracy measures
+ Ans: r.lm <- lm(Fertility ~ ., data=swiss)
+MAE(r.lm)
+MAE(predict(r.lm), swiss$Fertility)
+MAPE(r.lm)
+MSE(r.lm)
+RMSE(r.lm)
+
+d. Report the variable importance
+ Ans:  set.seed(1)
+ n=500> library(clusterGeneration)
+ library(mnormt)
+ S=genPositiveDefMat("eigen",dim=15)
+ S=genPositiveDefMat("unifcorrmat",dim=15)
+ X=rmnorm(n,varcov=S$Sigma)
+ library(corrplot)
+ corrplot(cor(X), order = "hclust")
+P=exp(Score)/(1+exp(Score))
+ Y=rbinom(n,size=1,prob=P)
+ df=data.frame(Y,X)
+ allX=paste("X",1:ncol(X),sep="")
+ names(df)=c("Y",allX)
+require(randomForest)
+fit=randomForest(factor(Y)~., data=df)
+
+e. Report the unimportant variables
+Ans: set.seed(100)
+x1 <- runif(100,0,1)
+x2 <- as.factor(sample(letters[1:3],100,replace=T))
+y <- x1+x1*(x2=="a")+2*(x2=="b")+rnorm(100)
+summary(lm(y~x1*x2))
+
+f. Interpret the results
+Ans: require(stats)
+summary(attitude)
+model1 <- lm(rating ~ complaints + 
+                      privileges + 
+                      learning, data = attitude)
+
+g. Visualize the results
+Ans: library(mlbench)
+ data(BreastCancer)
+par(mfrow=c(2,4))
+for(i in 2:9) {
+	counts <- table(BreastCancer[,i])
+	name <- names(BreastCancer)[i]
+	barplot(counts, main=name)
+}
+
+ 
